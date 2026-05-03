@@ -32,36 +32,26 @@ public class ComplaintController {
 
     // ✅ GET /all (pagination) - Any authenticated user can read
     @GetMapping("/all")
-@PreAuthorize("isAuthenticated()")
-public ResponseEntity<?> getAll(
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "5") int size) {
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> getAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
 
     Page<Complaint> complaintPage = service.getAllPaginated(PageRequest.of(page, size));
 
-    return ResponseEntity.ok(new Object() {
-        public final Object content = complaintPage.getContent();
-        public final int currentPage = complaintPage.getNumber();
-        public final int totalPages = complaintPage.getTotalPages();
-        public final long totalItems = complaintPage.getTotalElements();
-    });
+    return ResponseEntity.ok(complaintPage.getContent());
 }
 
     // ✅ GET / (default - paginated) - Any authenticated user can read
     @GetMapping
-@PreAuthorize("isAuthenticated()")
-public ResponseEntity<?> getAllDefault(
-        @RequestParam(defaultValue = "0") int page,
-        @RequestParam(defaultValue = "5") int size) {
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> getAllDefault(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
 
     Page<Complaint> complaintPage = service.getAllPaginated(PageRequest.of(page, size));
 
-    return ResponseEntity.ok(new Object() {
-        public final Object content = complaintPage.getContent();
-        public final int currentPage = complaintPage.getNumber();
-        public final int totalPages = complaintPage.getTotalPages();
-        public final long totalItems = complaintPage.getTotalElements();
-    });
+    return ResponseEntity.ok(complaintPage.getContent());
 }
 
     // ✅ PUT /{id} - Any authenticated user can update
